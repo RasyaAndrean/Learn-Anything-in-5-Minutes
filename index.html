@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Learn Anything in 5 Minutes</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --primary: #4f46e5;
+        --primary-dark: #4338ca;
+        --secondary: #10b981;
+        --dark: #1f2937;
+        --light: #f9fafb;
+        --gray: #6b7280;
+        --light-gray: #e5e7eb;
+        --indigo-50: #eef2ff;
+        --indigo-100: #e0e7ff;
+        --indigo-200: #c7d2fe;
+        --indigo-600: #4f46e5;
+        --indigo-700: #4338ca;
+        --indigo-800: #3730a3;
+        --indigo-900: #312e81;
+        --green-50: #ecfdf5;
+        --green-600: #059669;
+        --green-800: #065f46;
+        --amber-50: #fffbeb;
+        --amber-800: #92400e;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Inter", sans-serif;
+      }
+
+      body {
+        background: linear-gradient(to bottom right, var(--indigo-50), #e0ffff);
+        min-height: 100vh;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 16px;
+      }
+
+      header {
+        background-color: white;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      .header-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 24px 16px;
+      }
+
+      .logo {
+        font-size: 24px;
+        font-weight: 700;
+        color: var(--indigo-600);
+      }
+
+      .btn {
+        padding: 8px 16px;
+        border-radius: 6px;
+        font-weight: 500;
+        cursor: pointer;
+        border: none;
+        transition: background-color 0.3s ease;
+      }
+
+      .btn-primary {
+        background-color: var(--indigo-600);
+        color: white;
+      }
+
+      .btn-primary:hover {
+        background-color: var(--indigo-700);
+      }
+
+      .btn-secondary {
+        background-color: var(--secondary);
+        color: white;
+      }
+
+      .btn-secondary:hover {
+        background-color: var(--green-600);
+      }
+
+      main {
+        padding: 32px 16px;
+      }
+
+      .card {
+        background-color: white;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        margin-bottom: 32px;
+      }
+
+      .card-body {
+        padding: 24px;
+      }
+
+      .search-bar {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        margin-bottom: 24px;
+      }
+
+      @media (min-width: 768px) {
+        .search-bar {
+          flex-direction: row;
+        }
+      }
+
+      .search-input {
+        flex: 1;
+      }
+
+      .search-input input {
+        width: 100%;
+        padding: 8px 16px;
+        border: 1px solid var(--light-gray);
+        border-radius: 6px;
+        font-size: 16px;
+        outline: none;
+      }
+
+      .search-input input:focus {
+        border-color: var(--indigo-600);
+        box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.2);
+      }
+
+      .search-actions {
+        display: flex;
+        align-items: center;
+      }
+
+      .checkbox-container {
+        display: flex;
+        align-items: center;
+        margin-right: 16px;
+        cursor: pointer;
+      }
+
+      .checkbox-container input {
+        margin-right: 8px;
+      }
+
+      .random-topic {
+        background-color: var(--indigo-50);
+        padding: 16px;
+        border-radius: 6px;
+        margin-bottom: 24px;
+      }
+
+      .random-topic p:first-child {
+        color: var(--indigo-800);
+      }
+
+      .random-topic p:last-child {
+        font-size: 14px;
+        color: var(--indigo-600);
+        margin-top: 4px;
+      }
+
+      .loading {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 48px 0;
+      }
+
+      .spinner {
+        border: 4px solid rgba(0, 0, 0, 0.1);
+        border-left: 4px solid var(--indigo-600);
+        border-radius: 50%;
+        width: 48px;
+        height: 48px;
+        animation: spin 1s linear infinite;
+        margin-right: 12px;
+      }
+
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+
+      .content-header {
+        border-bottom: 1px solid var(--light-gray);
+        padding-bottom: 16px;
+        margin-bottom: 16px;
+      }
+
+      .content-header h2 {
+        font-size: 24px;
+        color: var(--dark);
+        margin-bottom: 8px;
+      }
+
+      .super-summary {
+        background-color: var(--indigo-50);
+        padding: 16px;
+        border-radius: 6px;
+      }
+
+      .super-summary h3 {
+        color: var(--indigo-800);
+        margin-bottom: 8px;
+        font-weight: 600;
+      }
+
+      .topic-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+
+      @media (min-width: 768px) {
+        .topic-grid {
+          grid-template-columns: 1fr 1fr;
+        }
+      }
+
+      .topic-item {
+        background-color: #f9fafb;
+        padding: 16px;
+        border-radius: 6px;
+      }
+
+      .topic-item h3 {
+        font-weight: 600;
+        color: var(--dark);
+        margin-bottom: 8px;
+      }
+
+      .topic-item p {
+        color: var(--gray);
+      }
+
+      .features {
+        margin-top: 32px;
+      }
+
+      .features h2 {
+        font-size: 20px;
+        color: var(--dark);
+        margin-bottom: 16px;
+      }
+
+      .features-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 24px;
+      }
+
+      @media (min-width: 768px) {
+        .features-grid {
+          grid-template-columns: 1fr 1fr 1fr;
+        }
+      }
+
+      .feature-item {
+        padding: 16px;
+        border-radius: 6px;
+      }
+
+      .feature-item h3 {
+        font-weight: 600;
+        margin-bottom: 8px;
+      }
+
+      .feature-item.blue {
+        background-color: var(--indigo-50);
+      }
+
+      .feature-item.blue h3 {
+        color: var(--indigo-800);
+      }
+
+      .feature-item.green {
+        background-color: var(--green-50);
+      }
+
+      .feature-item.green h3 {
+        color: var(--green-800);
+      }
+
+      .feature-item.amber {
+        background-color: var(--amber-50);
+      }
+
+      .feature-item.amber h3 {
+        color: var(--amber-800);
+      }
+
+      footer {
+        background-color: var(--indigo-900);
+        color: white;
+        padding: 32px 16px;
+      }
+
+      .footer-content {
+        display: flex;
+        flex-direction: column;
+      }
+
+      @media (min-width: 768px) {
+        .footer-content {
+          flex-direction: row;
+          justify-content: space-between;
+        }
+      }
+
+      .footer-info {
+        margin-bottom: 24px;
+      }
+
+      @media (min-width: 768px) {
+        .footer-info {
+          margin-bottom: 0;
+        }
+      }
+
+      .footer-info h2 {
+        font-size: 18px;
+        font-weight: 700;
+      }
+
+      .footer-info p {
+        color: var(--indigo-200);
+        font-size: 14px;
+        margin-top: 8px;
+      }
+
+      .footer-links {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 32px;
+      }
+
+      .footer-links h3 {
+        font-size: 12px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: var(--indigo-200);
+        margin-bottom: 16px;
+      }
+
+      .footer-links ul {
+        list-style: none;
+      }
+
+      .footer-links li {
+        margin-bottom: 8px;
+      }
+
+      .footer-links a {
+        color: var(--indigo-300);
+        text-decoration: none;
+        transition: color 0.3s ease;
+      }
+
+      .footer-links a:hover {
+        color: white;
+      }
+
+      .footer-bottom {
+        margin-top: 32px;
+        padding-top: 32px;
+        border-top: 1px solid var(--indigo-800);
+        font-size: 14px;
+        color: var(--indigo-300);
+      }
+
+      .hidden {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <div class="header-content">
+          <h1 class="logo">Learn Anything in 5 Minutes</h1>
+          <button id="randomTopicBtn" class="btn btn-secondary">
+            Topik Acak
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main class="container">
+      <div class="card">
+        <div class="card-body">
+          <div class="search-bar">
+            <div class="search-input">
+              <input
+                type="text"
+                id="topicInput"
+                placeholder="Apa yang ingin Anda pelajari hari ini?"
+              />
+            </div>
+            <div class="search-actions">
+              <label class="checkbox-container">
+                <input type="checkbox" id="superSummaryCheckbox" />
+                <span>Mode Super Summary</span>
+              </label>
+              <button id="learnBtn" class="btn btn-primary">Pelajari</button>
+            </div>
+          </div>
+
+          <div id="randomTopicAlert" class="random-topic hidden">
+            <p>Topik acak: <strong id="randomTopicText"></strong></p>
+            <p>Klik "Pelajari" untuk mulai belajar tentang topik ini</p>
+          </div>
+
+          <div id="loadingIndicator" class="loading hidden">
+            <div class="spinner"></div>
+            <p>Menyiapkan pembelajaran...</p>
+          </div>
+
+          <div id="contentArea" class="hidden">
+            <div class="content-header">
+              <h2 id="contentTitle"></h2>
+              <p id="contentSummary"></p>
+            </div>
+
+            <div id="superSummaryContent" class="super-summary hidden">
+              <h3>Super Summary</h3>
+              <p id="superSummaryText"></p>
+            </div>
+
+            <div id="topicParts" class="topic-grid">
+              <!-- Topic parts will be inserted here -->
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card features">
+        <div class="card-body">
+          <h2>Mengapa Belajar dengan Kami?</h2>
+          <div class="features-grid">
+            <div class="feature-item blue">
+              <h3>Hemat Waktu</h3>
+              <p>
+                Pelajari konsep rumit dalam waktu singkat. Sempurna untuk gaya
+                hidup sibuk.
+              </p>
+            </div>
+            <div class="feature-item green">
+              <h3>Dipecah Secara Cerdas</h3>
+              <p>
+                AI kami memecah topik kompleks menjadi bagian-bagian kecil yang
+                mudah dipahami.
+              </p>
+            </div>
+            <div class="feature-item amber">
+              <h3>Belajar Setiap Hari</h3>
+              <p>
+                Dapatkan topik acak setiap hari untuk memperluas pengetahuan
+                Anda tentang dunia.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <footer>
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-info">
+            <h2>Learn Anything in 5 Minutes</h2>
+            <p>Belajar cepat. Ingat lama. Terapkan dengan percaya diri.</p>
+          </div>
+          <div class="footer-links">
+            <div>
+              <h3>Eksplorasi</h3>
+              <ul>
+                <li><a href="#">Topik Populer</a></li>
+                <li><a href="#">Kategori</a></li>
+                <li><a href="#">Topik Baru</a></li>
+              </ul>
+            </div>
+            <div>
+              <h3>Komunitas</h3>
+              <ul>
+                <li><a href="#">Tentang Kami</a></li>
+                <li><a href="#">Kontak</a></li>
+                <li><a href="#">FAQ</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>
+            &copy; 2025 Learn Anything in 5 Minutes Di Buat Oleh Rasya Andrean.
+            Semua hak dilindungi.
+          </p>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      // Data untuk topik pembelajaran
+      const learningContent = {
+        Fotosintesis: {
+          title: "Fotosintesis",
+          summary:
+            "Proses tumbuhan mengubah energi cahaya menjadi energi kimia untuk nutrisi.",
+          parts: [
+            {
+              title: "1. Definisi",
+              content:
+                "Fotosintesis adalah proses di mana tumbuhan mengubah energi matahari, air, dan karbon dioksida menjadi glukosa dan oksigen.",
+            },
+            {
+              title: "2. Reaksi Kimia",
+              content: "6CO₂ + 6H₂O + Energi Cahaya → C₆H₁₂O₆ + 6O₂",
+            },
+            {
+              title: "3. Lokasi",
+              content: "Terjadi dalam kloroplas, terutama di daun.",
+            },
+            {
+              title: "4. Tahapan",
+              content:
+                "Reaksi terang (mengubah energi matahari menjadi ATP) dan siklus Calvin (menggunakan ATP untuk membuat gula).",
+            },
+          ],
+        },
+        "Teori Relativitas": {
+          title: "Teori Relativitas Einstein",
+          summary:
+            "Teori fisika revolusioner yang mengubah pemahaman kita tentang ruang, waktu, dan gravitasi.",
+          parts: [
+            {
+              title: "1. Relativitas Khusus",
+              content:
+                "Dikembangkan tahun 1905, menjelaskan bagaimana ruang dan waktu saling terkait bagi objek yang bergerak tanpa percepatan.",
+            },
+            {
+              title: "2. Persamaan E=mc²",
+              content:
+                "Energi (E) = massa (m) × kecepatan cahaya (c) kuadrat. Menunjukkan kesetaraan antara massa dan energi.",
+            },
+            {
+              title: "3. Relativitas Umum",
+              content:
+                "Dipublikasikan tahun 1915, menjelaskan gravitasi sebagai efek dari kelengkungan ruang-waktu yang disebabkan oleh massa dan energi.",
+            },
+            {
+              title: "4. Bukti Empiris",
+              content:
+                "Dibuktikan melalui pembelokan cahaya bintang oleh matahari, pergeseran orbit Merkurius, dan gelombang gravitasi.",
+            },
+          ],
+        },
+        Blockchain: {
+          title: "Cara Kerja Blockchain",
+          summary:
+            "Teknologi pencatatan data terdesentralisasi yang mendasari mata uang kripto dan banyak aplikasi lainnya.",
+          parts: [
+            {
+              title: "1. Pengertian Dasar",
+              content:
+                "Blockchain adalah database terdistribusi yang mencatat transaksi dalam blok yang terhubung secara kronologis dan diamankan dengan kriptografi.",
+            },
+            {
+              title: "2. Blok & Rantai",
+              content:
+                "Setiap blok memuat data transaksi, hash dari blok sendiri, dan hash dari blok sebelumnya, membentuk rantai yang tak dapat diubah.",
+            },
+            {
+              title: "3. Konsensus",
+              content:
+                "Menggunakan mekanisme seperti Proof of Work atau Proof of Stake untuk memverifikasi transaksi tanpa otoritas pusat.",
+            },
+            {
+              title: "4. Aplikasi",
+              content:
+                "Digunakan untuk mata uang kripto, kontrak pintar, rantai pasokan, identitas digital, dan banyak lagi.",
+            },
+          ],
+        },
+        "Kecerdasan Buatan": {
+          title: "Dasar Kecerdasan Buatan (AI)",
+          summary:
+            "Teknologi yang memungkinkan mesin meniru kecerdasan manusia melalui pembelajaran dan pemecahan masalah.",
+          parts: [
+            {
+              title: "1. Definisi & Jenis",
+              content:
+                "AI adalah kemampuan mesin untuk melakukan tugas yang memerlukan kecerdasan manusia. Terbagi dalam AI lemah (spesifik tugas) dan AI kuat (setara manusia).",
+            },
+            {
+              title: "2. Machine Learning",
+              content:
+                "Cabang AI yang memungkinkan komputer belajar dari data tanpa diprogram secara eksplisit, menggunakan algoritma yang membaik dari pengalaman.",
+            },
+            {
+              title: "3. Deep Learning",
+              content:
+                "Subset machine learning yang menggunakan jaringan saraf tiruan berlapis banyak untuk memproses data seperti cara otak manusia.",
+            },
+            {
+              title: "4. Aplikasi Modern",
+              content:
+                "Digunakan untuk pengenalan wajah, asisten virtual, diagnosa medis, mobil otonom, dan prediksi tren pasar.",
+            },
+          ],
+        },
+        "Psikologi Warna": {
+          title: "Psikologi Warna",
+          summary:
+            "Studi tentang bagaimana warna mempengaruhi perilaku dan emosi manusia.",
+          parts: [
+            {
+              title: "1. Dasar Teori",
+              content:
+                "Psikologi warna mempelajari bagaimana warna mempengaruhi persepsi dan perilaku manusia, digunakan dalam pemasaran, desain, dan terapi.",
+            },
+            {
+              title: "2. Warna Primer",
+              content:
+                "Merah (energi, gairah), Biru (kepercayaan, ketenangan), Kuning (kebahagiaan, optimisme) memiliki efek psikologis kuat dan berbeda.",
+            },
+            {
+              title: "3. Konteks Budaya",
+              content:
+                "Interpretasi warna bervariasi antar budaya - putih melambangkan kemurnian di Barat tetapi berkabung di beberapa budaya Asia.",
+            },
+            {
+              title: "4. Aplikasi Praktis",
+              content:
+                "Digunakan dalam branding, desain interior, terapi warna, dan untuk meningkatkan produktivitas di lingkungan kerja.",
+            },
+          ],
+        },
+      };
+
+      // Daftar topik acak
+      const randomTopics = [
+        "Fotosintesis",
+        "Teori Relativitas",
+        "Blockchain",
+        "Kecerdasan Buatan",
+        "Psikologi Warna",
+        "Evolusi Manusia",
+        "Sejarah Internet",
+        "Sistem Tata Surya",
+        "Mitologi Yunani",
+      ];
+
+      // Elemen-elemen DOM
+      const topicInput = document.getElementById("topicInput");
+      const superSummaryCheckbox = document.getElementById(
+        "superSummaryCheckbox"
+      );
+      const learnBtn = document.getElementById("learnBtn");
+      const randomTopicBtn = document.getElementById("randomTopicBtn");
+      const randomTopicAlert = document.getElementById("randomTopicAlert");
+      const randomTopicText = document.getElementById("randomTopicText");
+      const loadingIndicator = document.getElementById("loadingIndicator");
+      const contentArea = document.getElementById("contentArea");
+      const contentTitle = document.getElementById("contentTitle");
+      const contentSummary = document.getElementById("contentSummary");
+      const superSummaryContent = document.getElementById(
+        "superSummaryContent"
+      );
+      const superSummaryText = document.getElementById("superSummaryText");
+      const topicParts = document.getElementById("topicParts");
+
+      // Fungsi untuk menghasilkan konten pembelajaran
+      function generateLearningContent(topic) {
+        // Menampilkan indikator loading
+        loadingIndicator.classList.remove("hidden");
+        contentArea.classList.add("hidden");
+
+        // Simulasi waktu loading
+        setTimeout(() => {
+          loadingIndicator.classList.add("hidden");
+
+          let content;
+          if (learningContent[topic]) {
+            content = learningContent[topic];
+          } else {
+            // Konten default jika topik tidak ditemukan
+            content = {
+              title: topic,
+              summary: `Pembelajaran 5 menit tentang ${topic}.`,
+              parts: [
+                {
+                  title: "1. Dasar-dasar",
+                  content: `Pengenalan dasar tentang ${topic} yang mudah dipahami dalam waktu singkat.`,
+                },
+                {
+                  title: "2. Konsep Utama",
+                  content:
+                    "Konsep-konsep kunci yang perlu dipahami untuk menguasai topik ini.",
+                },
+                {
+                  title: "3. Aplikasi Praktis",
+                  content:
+                    "Bagaimana pengetahuan ini dapat diterapkan dalam kehidupan sehari-hari.",
+                },
+                {
+                  title: "4. Sumber Lanjutan",
+                  content:
+                    "Referensi untuk pembelajaran lebih lanjut jika Anda tertarik untuk mendalami topik ini.",
+                },
+              ],
+            };
+          }
+
+          // Mengisi konten
+          contentTitle.textContent = content.title;
+          contentSummary.textContent = content.summary;
+          superSummaryText.textContent = content.summary;
+
+          // Menampilkan atau menyembunyikan Super Summary
+          if (superSummaryCheckbox.checked) {
+            superSummaryContent.classList.remove("hidden");
+            topicParts.classList.add("hidden");
+          } else {
+            superSummaryContent.classList.add("hidden");
+            topicParts.classList.remove("hidden");
+
+            // Membuat elemen untuk setiap bagian topik
+            topicParts.innerHTML = "";
+            content.parts.forEach((part) => {
+              const partElement = document.createElement("div");
+              partElement.className = "topic-item";
+
+              const titleElement = document.createElement("h3");
+              titleElement.textContent = part.title;
+
+              const contentElement = document.createElement("p");
+              contentElement.textContent = part.content;
+
+              partElement.appendChild(titleElement);
+              partElement.appendChild(contentElement);
+              topicParts.appendChild(partElement);
+            });
+          }
+
+          contentArea.classList.remove("hidden");
+        }, 1500); // Simulasi delay 1.5 detik
+      }
+
+      // Event listener untuk tombol "Pelajari"
+      learnBtn.addEventListener("click", () => {
+        const topic = topicInput.value.trim();
+        if (topic) {
+          generateLearningContent(topic);
+          randomTopicAlert.classList.add("hidden");
+        }
+      });
+
+      // Event listener untuk tombol "Topik Acak"
+      randomTopicBtn.addEventListener("click", () => {
+        const randomIndex = Math.floor(Math.random() * randomTopics.length);
+        const randomTopic = randomTopics[randomIndex];
+
+        topicInput.value = randomTopic;
+        randomTopicText.textContent = randomTopic;
+        randomTopicAlert.classList.remove("hidden");
+      });
+
+      // Event listener untuk checkbox Super Summary
+      superSummaryCheckbox.addEventListener("change", () => {
+        if (contentArea.classList.contains("hidden")) return;
+
+        if (superSummaryCheckbox.checked) {
+          superSummaryContent.classList.remove("hidden");
+          topicParts.classList.add("hidden");
+        } else {
+          superSummaryContent.classList.add("hidden");
+          topicParts.classList.remove("hidden");
+        }
+      });
+
+      // Event listener untuk input (enter key)
+      topicInput.addEventListener("keypress", (event) => {
+        if (event.key === "Enter") {
+          learnBtn.click();
+        }
+      });
+    </script>
+  </body>
+</html>
